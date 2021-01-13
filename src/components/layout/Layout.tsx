@@ -15,8 +15,10 @@ import { menuRoutes, routes } from "static/routes";
 import Icon, { ShoppingCartOutlined } from "@ant-design/icons";
 
 import styles from "./Layout.module.scss";
+import categories from "static/categories";
+import React from "react";
 
-const { Header, Footer } = Layout;
+const { Header, Footer, Sider, Content } = Layout;
 
 const App = () => {
   const history = useHistory();
@@ -27,71 +29,92 @@ const App = () => {
   return (
     <div className={styles.App}>
       <Layout className={styles.Layout}>
+        <Header
+          className="site-layout-sub-header-background"
+          style={{ padding: 0 }}
+        >
+          <Row align="middle">
+            <Col flex="none">
+              <Menu theme="dark" mode="horizontal">
+                <Menu.Item key="logo">
+                  <Link to="/">
+                    <div className={styles.Logo}>
+                      <span>S</span>
+                      <Icon
+                        style={{ fontSize: 42 }}
+                        component={SalveIcon}
+                      ></Icon>
+                      <span>LVE</span>
+                    </div>
+                  </Link>
+                </Menu.Item>
+                {menuRoutes.map((route) => {
+                  return (
+                    <Menu.Item key={route.path}>
+                      <Link to={route.path}>{route.name}</Link>
+                    </Menu.Item>
+                  );
+                })}
+              </Menu>
+            </Col>
+            <Col flex="auto">
+              <Input.Search
+                className={styles.Search}
+                placeholder="Поиск товаров. Например, ибупрофен"
+                enterButton
+                onSearch={search}
+              />
+            </Col>
+            <Col flex="none">
+              <Link to="/cart">
+                <Button
+                  className={styles.Cart}
+                  type="primary"
+                  icon={<ShoppingCartOutlined />}
+                  size="middle"
+                >
+                  Корзина
+                </Button>
+              </Link>
+            </Col>
+          </Row>
+        </Header>
         <Layout>
-          <Header
-            className="site-layout-sub-header-background"
-            style={{ padding: 0 }}
+          <Sider
+            theme="light"
+            onBreakpoint={(broken) => {
+              console.log(broken);
+            }}
+            onCollapse={(collapsed, type) => {
+              console.log(collapsed, type);
+            }}
           >
-            <Row align="middle">
-              <Col flex="none">
-                <Menu theme="dark" mode="horizontal">
-                  <Menu.Item key="logo">
-                    <Link to="/">
-                      <div className={styles.Logo}>
-                        <span>S</span>
-                        <Icon
-                          style={{ fontSize: 42 }}
-                          component={SalveIcon}
-                        ></Icon>
-                        <span>LVE</span>
-                      </div>
-                    </Link>
+            <Menu theme="light" mode="vertical" defaultSelectedKeys={["4"]}>
+              {categories.map((cat, idx) => {
+                return (
+                  <Menu.Item key={idx}>
+                    <Link to={`/categories/${cat.title}`}>{cat.title}</Link>
                   </Menu.Item>
-                  {menuRoutes.map((route) => {
-                    return (
-                      <Menu.Item key={route.path}>
-                        <Link to={route.path}>{route.name}</Link>
-                      </Menu.Item>
-                    );
-                  })}
-                </Menu>
-              </Col>
-              <Col flex="auto">
-                <Input.Search
-                  className={styles.Search}
-                  placeholder="Поиск товаров. Например, ибупрофен"
-                  enterButton
-                  onSearch={search}
-                />
-              </Col>
-              <Col flex="none">
-                <Link to="/cart">
-                  <Button
-                    className={styles.Cart}
-                    type="primary"
-                    icon={<ShoppingCartOutlined />}
-                    size="middle"
-                  >
-                    Корзина
-                  </Button>
-                </Link>
-              </Col>
-            </Row>
-          </Header>
-          <Switch>
-            {routes.map((route) => {
-              const Component = route.component;
-              return (
-                <Route exact={route.exact} path={route.path}>
-                  <Component />
-                </Route>
-              );
-            })}
-          </Switch>
-          <Footer className={styles.Footer} style={{ textAlign: "center" }}>
-            sTIMPonk 2021
-          </Footer>
+                );
+              })}
+            </Menu>
+          </Sider>
+          <Content>
+            <Switch>
+              {routes.map((route) => {
+                const Component = route.component;
+                return (
+                  <Route exact={route.exact} path={route.path}>
+                    <Component />
+                  </Route>
+                );
+              })}
+            </Switch>
+          </Content>
         </Layout>
+        <Footer className={styles.Footer} style={{ textAlign: "center" }}>
+          sTIMPonk 2021
+        </Footer>
       </Layout>
     </div>
   );

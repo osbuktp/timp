@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Layout, Menu, PageHeader, Space } from "antd";
+import { Layout, PageHeader, Space } from "antd";
 import ItemCard from "components/base/ItemCard";
-import { Link } from "react-router-dom";
-import categories from "static/categories";
 import popular from "static/popular";
 
-const { Sider, Content } = Layout;
+const { Content } = Layout;
 
 const Main: React.FC = (props) => {
   const [items, setItems] = useState<any[]>([]);
@@ -24,47 +22,26 @@ const Main: React.FC = (props) => {
   }, []);
 
   return (
-    <Layout>
-      <Sider
-        theme="light"
-        onBreakpoint={(broken) => {
-          console.log(broken);
-        }}
-        onCollapse={(collapsed, type) => {
-          console.log(collapsed, type);
-        }}
+    <Content>
+      <PageHeader title="Популярные товары" />
+      <div
+        className="site-layout-background"
+        style={{ padding: 24, minHeight: 360 }}
       >
-        <Menu theme="light" mode="vertical" defaultSelectedKeys={["4"]}>
-          {categories.map((cat, idx) => {
+        <Space wrap size={[16, 16]}>
+          {items?.map((item) => {
             return (
-              <Menu.Item key={idx}>
-                <Link to={`/categories/${cat.title}`}>{cat.title}</Link>
-              </Menu.Item>
+              <ItemCard
+                id={item.id}
+                price={item.price}
+                name={item.name}
+                src={item.imageSrc}
+              />
             );
           })}
-        </Menu>
-      </Sider>
-      <Content style={{ margin: "24px 16px 0" }}>
-        <PageHeader title="Популярные товары" />
-        <div
-          className="site-layout-background"
-          style={{ padding: 24, minHeight: 360 }}
-        >
-          <Space wrap size={[16, 16]}>
-            {items?.map((item) => {
-              return (
-                <ItemCard
-                  id={item.id}
-                  price={item.price}
-                  name={item.name}
-                  src={item.imageSrc}
-                />
-              );
-            })}
-          </Space>
-        </div>
-      </Content>
-    </Layout>
+        </Space>
+      </div>
+    </Content>
   );
 };
 

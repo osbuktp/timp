@@ -1,4 +1,5 @@
 import { Button, Layout, PageHeader, Table } from "antd";
+import { Link } from "react-router-dom";
 import { ICartItem } from "interfaces/common";
 import React from "react";
 
@@ -76,7 +77,9 @@ const Summary = (data: ICartItem[]) => {
       <td></td>
       <td></td>
       <td>
-        <Button type="primary">Перейти к оформлению</Button>
+        <Link to="/checkout">
+          <Button type="primary">Перейти к оформлению</Button>
+        </Link>
       </td>
     </tr>
   );
