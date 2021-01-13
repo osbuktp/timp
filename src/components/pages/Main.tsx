@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Layout, Menu, Row, Col, PageHeader, Space } from "antd";
+import { Layout, Menu, PageHeader, Space } from "antd";
 import ItemCard from "components/base/ItemCard";
 import { Link } from "react-router-dom";
 import categories from "static/categories";
@@ -17,8 +17,7 @@ const Main: React.FC = (props) => {
       );
       const res = await Promise.all(promises);
       const data = await Promise.all(res.map((r) => r.json()));
-      console.log(data);
-      // setItems(data);
+      setItems(data);
     };
 
     loadItems();

@@ -27,7 +27,7 @@ const CategoryPage = () => {
     };
 
     loadItems();
-  }, [category]);
+  }, [category, parsed]);
 
   return (
     <Layout>

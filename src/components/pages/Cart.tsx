@@ -1,6 +1,6 @@
 import { Button, Layout, PageHeader, Table } from "antd";
 import { ICartItem } from "interfaces/common";
-import React, { useEffect } from "react";
+import React from "react";
 
 const { Content } = Layout;
 
