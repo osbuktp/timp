@@ -1,7 +1,8 @@
-import { Button, Layout, PageHeader, Table } from "antd";
+import { Button, Layout, PageHeader, Table, InputNumber, Space } from "antd";
 import { Link } from "react-router-dom";
-import { ICartItem } from "interfaces/common";
+import { ICartItem, changeCount, removeFromCart } from "redux/reducer";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const { Content } = Layout;
 
@@ -15,18 +16,39 @@ interface IColumn {
 const CoverImage = ({ src }: { src: string }) => (
   <div style={{ width: "160px", height: "90px" }}>
     <img
-      style={{ width: "100%", height: "100%", objectFit: "cover" }}
+      style={{ width: "100%", height: "100%", objectFit: "contain" }}
       src={src}
       alt="cover"
     />
   </div>
 );
 
+const CartControls = ({ id }: { id: string }) => {
+  const item = useSelector((store: ICartItem[]) => {
+    return store.find((el) => el.id === id);
+  });
+  const dispatch = useDispatch();
+  return (
+    <Space>
+      <InputNumber
+        defaultValue={item!.count}
+        min={1}
+        onStep={(value) =>
+          dispatch(changeCount({ id: item!.id, count: value }))
+        }
+      />
+      <Button onClick={() => dispatch(removeFromCart(item!.id))} danger>
+        Удалить
+      </Button>
+    </Space>
+  );
+};
+
 const columns: IColumn[] = [
   {
     title: "",
-    dataIndex: "src",
-    key: "src",
+    dataIndex: "imageSrc",
+    key: "imageSrc",
     render: (src) => <CoverImage src={src} />,
   },
   {
@@ -41,27 +63,9 @@ const columns: IColumn[] = [
   },
   {
     title: "Количество",
-    dataIndex: "count",
-    key: "count",
-  },
-];
-
-const data: ICartItem[] = [
-  {
-    src: "https://uteka.ru/media/big/c/58/c581d934629ceb3674132531ab923c3f.jpg",
-    name: "Ибупрофен",
-    id: 1,
-    price: 100,
-    count: 1,
-    key: 1,
-  },
-  {
-    src: "https://uteka.ru/media/big/c/58/c581d934629ceb3674132531ab923c3f.jpg",
-    name: "Не ибупрофен",
-    id: 2,
-    price: 200,
-    count: 1,
-    key: 2,
+    dataIndex: "id",
+    key: "id",
+    render: (id) => <CartControls id={id} />,
   },
 ];
 
@@ -86,6 +90,10 @@ const Summary = (data: ICartItem[]) => {
 };
 
 const Cart = () => {
+  const data = useSelector((state: ICartItem[]) => state).map((item) => ({
+    ...item,
+    key: item.id,
+  }));
   return (
     <Layout>
       <Content>

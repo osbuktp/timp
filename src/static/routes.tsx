@@ -1,4 +1,3 @@
-import Pickup from "components/pages/Pickup";
 import Contacts from "components/pages/Contacts";
 import Main from "components/pages/Main";
 import Cart from "components/pages/Cart";
@@ -6,6 +5,7 @@ import Item from "components/pages/Item";
 import Search from "components/pages/Search";
 import Checkout from "components/pages/Checkout";
 import Category from "components/pages/Category";
+import Final from "components/pages/Final";
 
 interface IRoute {
   path: string;
@@ -19,12 +19,7 @@ export const menuRoutes: IRoute[] = [
     path: "/contacts",
     name: "Контакты",
     component: Contacts,
-  },
-  {
-    name: "Пункты выдачи",
-    path: "/pickuppoints",
-    component: Pickup,
-  },
+  }
 ];
 
 export const routes: IRoute[] = [
@@ -48,6 +43,10 @@ export const routes: IRoute[] = [
   {
     path: "/categories/:category",
     component: Category,
+  },
+  {
+    path: "/final",
+    component: Final,
   },
   {
     path: "/",

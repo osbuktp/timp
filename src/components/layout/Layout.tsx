@@ -17,15 +17,23 @@ import Icon, { ShoppingCartOutlined } from "@ant-design/icons";
 import styles from "./Layout.module.scss";
 import categories from "static/categories";
 import React from "react";
+import { useSelector } from "react-redux";
+import { ICartItem } from "redux/reducer";
 
 const { Header, Footer, Sider, Content } = Layout;
 
 const App = () => {
   const history = useHistory();
-  console.log(history);
   const search = (value: string) => {
     history.push(`/search/${value}`);
   };
+
+  const cartSize = useSelector((state: ICartItem[]) => {
+    return state.reduce((acc, curr) => {
+      return (acc += curr.count);
+    }, 0);
+  });
+
   return (
     <div className={styles.App}>
       <Layout className={styles.Layout}>
@@ -73,7 +81,7 @@ const App = () => {
                   icon={<ShoppingCartOutlined />}
                   size="middle"
                 >
-                  Корзина
+                  Корзина | {cartSize}
                 </Button>
               </Link>
             </Col>

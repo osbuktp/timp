@@ -1,3 +1,15 @@
+// export interface IItem {
+//   id: string;
+//   name: string;
+//   imageSrc: string;
+//   agent: string;
+//   price: number;
+//   brand: string;
+//   country: string;
+//   specifications: string[];
+//   categories: string[];
+// }
+
 export interface ICartItem {
   src: string;
   id: number;

@@ -1,6 +1,8 @@
 import { Layout, PageHeader, Descriptions, Button } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { addToCart, IItem } from "redux/reducer";
+import { useDispatch } from "react-redux";
 
 const { Content } = Layout;
 
@@ -23,6 +25,14 @@ const ItemPage = () => {
 
     loadItems();
   }, [id]);
+
+  const dispatch = useDispatch();
+  const purchase = useCallback(
+    (item: IItem) => {
+      dispatch(addToCart(item));
+    },
+    [dispatch]
+  );
 
   return (
     <Layout>
@@ -52,7 +62,7 @@ const ItemPage = () => {
                 src={item?.imageSrc}
                 alt=""
               />
-              <Button type="primary">
+              <Button type="primary" onClick={() => purchase(item)}>
                 {item?.price}₽ | Добавить в корзину
               </Button>
             </div>
