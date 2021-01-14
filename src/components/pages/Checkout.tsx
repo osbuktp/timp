@@ -16,7 +16,7 @@ const Checkout = () => {
   const history = useHistory();
   const checkout = useCallback(() => {
     history.push("/final");
-  }, []);
+  }, [history]);
   return (
     <Layout>
       <Content>
