@@ -1,8 +1,8 @@
 import { Layout, PageHeader, Form, Input, Select, Button } from "antd";
 import React, { useCallback } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { ICartItem } from "redux/reducer";
+import { ICartItem, clearCart } from "redux/reducer";
 
 const { Content } = Layout;
 
@@ -14,8 +14,10 @@ const Checkout = () => {
   });
 
   const history = useHistory();
+  const dispatch = useDispatch();
   const checkout = useCallback(() => {
     history.push("/final");
+    dispatch(clearCart());
   }, [history]);
   return (
     <Layout>

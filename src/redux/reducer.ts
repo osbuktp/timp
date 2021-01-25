@@ -43,9 +43,17 @@ const slice = createSlice({
       state.splice(idx, 1);
       return state;
     },
+    clearCart: (state, action: PayloadAction<void>) => {
+      return [];
+    },
   },
 });
 
-export const { addToCart, removeFromCart, changeCount } = slice.actions;
+export const {
+  addToCart,
+  removeFromCart,
+  changeCount,
+  clearCart,
+} = slice.actions;
 
 export default slice.reducer;
