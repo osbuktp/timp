@@ -129,7 +129,7 @@ const App = () => {
 };
 
 const wrapper = () => (
-  <Router basename={process.env.PUBLIC_URL}>
+  <Router basename={process.env.PUBLIC_URL + "/"}>
     <App />
   </Router>
 );
