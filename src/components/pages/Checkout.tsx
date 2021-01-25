@@ -18,7 +18,7 @@ const Checkout = () => {
   const checkout = useCallback(() => {
     history.push("/final");
     dispatch(clearCart());
-  }, [history]);
+  }, [history, dispatch]);
   return (
     <Layout>
       <Content>
